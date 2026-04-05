@@ -15,8 +15,8 @@ function createWindow(): void {
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       contextIsolation: true,
-      nodeIntegration: false,
-    },
+      nodeIntegration: false
+    }
   })
 
   const menu = Menu.buildFromTemplate([
@@ -26,19 +26,27 @@ function createWindow(): void {
         {
           label: 'Abrir documento...',
           accelerator: 'CmdOrCtrl+O',
-          click: () => win.webContents.send('menu:open-file'),
+          click: () => win.webContents.send('menu:open-file')
         },
-        { label: 'Fechar', role: 'quit' },
-      ],
+        { label: 'Fechar', role: 'quit' }
+      ]
     },
     {
       label: 'Visualizar',
       submenu: [
         { label: 'Tela Cheia', accelerator: 'F11', role: 'togglefullscreen' },
-        { label: 'Zoom +', accelerator: 'CmdOrCtrl+=', click: () => win.webContents.send('menu:zoom-in') },
-        { label: 'Zoom -', accelerator: 'CmdOrCtrl+-', click: () => win.webContents.send('menu:zoom-out') },
-      ],
-    },
+        {
+          label: 'Zoom +',
+          accelerator: 'CmdOrCtrl+=',
+          click: () => win.webContents.send('menu:zoom-in')
+        },
+        {
+          label: 'Zoom -',
+          accelerator: 'CmdOrCtrl+-',
+          click: () => win.webContents.send('menu:zoom-out')
+        }
+      ]
+    }
   ])
   Menu.setApplicationMenu(menu)
 
@@ -50,10 +58,11 @@ function createWindow(): void {
   }
 }
 
-ipcMain.handle('dialog:open-file', async () => {
-  const result = await dialog.showOpenDialog({
+ipcMain.handle('dialog:open-file', async (event) => {
+  const win = BrowserWindow.fromWebContents(event.sender)
+  const result = await dialog.showOpenDialog(win ?? undefined, {
     filters: [{ name: 'Documentos', extensions: ['pdf', 'docx'] }],
-    properties: ['openFile'],
+    properties: ['openFile']
   })
   if (result.canceled) return null
   return result.filePaths[0]
