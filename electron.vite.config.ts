@@ -3,8 +3,12 @@ import { defineConfig } from 'electron-vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  main: {},
-  preload: {},
+  main: {
+    entry: 'src/main/main.ts'
+  },
+  preload: {
+    input: resolve(__dirname, 'src/preload/preload.ts')
+  },
   renderer: {
     resolve: {
       alias: {
