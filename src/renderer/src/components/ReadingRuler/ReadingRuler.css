@@ -1,0 +1,27 @@
+/* ReadingRuler.css */
+.reading-ruler {
+  position: absolute;
+  inset: 0;
+  pointer-events: none; /* não bloqueia cliques e seleção de texto */
+  z-index: 100;
+}
+
+.ruler-overlay {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background-color: #000;
+  transition: height 40ms linear, top 40ms linear; /* suavidade */
+}
+
+.ruler-top { top: 0; }
+.ruler-bottom { bottom: 0; }
+
+.ruler-guide {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(99, 179, 237, 0.3); /* linha azul sutil */
+  transform: translateY(-50%);
+}
