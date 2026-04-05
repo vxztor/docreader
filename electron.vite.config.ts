@@ -7,7 +7,7 @@ export default defineConfig({
     entry: 'src/main/main.ts'
   },
   preload: {
-    input: resolve(__dirname, 'src/preload/preload.ts')
+    input: resolve(__dirname, 'src/preload/index.ts')
   },
   renderer: {
     resolve: {
